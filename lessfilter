@@ -1,0 +1,14 @@
+#!/bin/sh
+case "$1" in 
+	*.md)
+		mdv "$1"
+		exit 0
+		;;
+	*.json)
+		jq . "$1"
+		exit 0
+		;;
+esac
+
+/usr/bin/lesspipe.sh "$1"
+exit 0
