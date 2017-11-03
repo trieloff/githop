@@ -1,0 +1,62 @@
+#!/bin/zsh
+
+echo $@
+
+tag="trieloff/githop"
+
+if [[ "$1" == :* ]]; then
+	tag="${tag}${1}"
+	shift
+fi
+
+echo $tag
+
+name=$(echo $1 | sed -e "s/.*\\///" | sed -e "s/\\.git$//")
+
+dockers=$(docker ps | wc -l | sed -e "s/ //g")
+
+CONTAINER=$(docker run -p ${dockers}445:445 -it -d ${tag})
+
+if [ $(uname) = "Darwin" ]; then
+
+	echo "Configuring Samba"
+	docker exec $CONTAINER sed -i "10s/.*/[code-${dockers}]/" /etc/samba/smb.conf
+	docker exec $CONTAINER sed -i "13s|.*|   path = /code/${name}|" /etc/samba/smb.conf
+
+	echo "Starting SMB Daemon"
+	docker exec $CONTAINER smbd
+
+	echo "Creating Login User"
+	docker exec $CONTAINER setsmbpassword $CONTAINER
+
+fi
+
+echo "Copying essential files"
+docker cp ~/.ssh/id_rsa $CONTAINER:/root/.ssh/id_rsa
+
+echo "Checking out repos in container"
+docker exec $CONTAINER /usr/bin/githop $@
+
+if [ $(uname) = "Darwin" ]; then
+	mkdir -p $name
+	echo "Mounting Evide^H Workspace"
+	echo mount_smbfs -f 644 -o soft -N //root:${CONTAINER}@localhost:${dockers}445/code-${dockers} $name
+	mount_smbfs -f 644 -o soft -N //root:${CONTAINER}@localhost:${dockers}445/code-${dockers} $name
+
+fi
+
+echo "Logging into container"
+docker attach $CONTAINER
+
+echo "Killing container"
+docker kill $CONTAINER
+
+if [ $(uname) = "Darwin" ]; then
+
+	echo "Unmounting Workspace"
+	diskutil unmount force $name &
+	rm -r $name
+
+fi
+
+echo "Done."
