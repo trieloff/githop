@@ -1,0 +1,33 @@
+#!/bin/zsh
+echo "Getting Repos from Git"
+
+mkdir -p /code
+
+cd /code
+#git clone $1
+
+reponame=$(echo $1 | sed -e "s/.*://" | sed -e "s/\\.git$//")
+myname=$(echo $reponame | sed -e "s/^.*\\///")
+user=$(echo $reponame | sed -e "s/\\/.*$//")
+
+
+for repo in $@
+do
+	reponame=$(echo $repo | sed -e "s/.*://" | sed -e "s/\\.git$//")
+	name=$(echo $reponame | sed -e "s/^.*\\///")
+	user=$(echo $reponame | sed -e "s/\\/.*$//")
+
+	if [ "$repo" = "$1" ]; then
+		user="origin"
+		git clone $repo
+		cd $name
+	elif [ "$repo" = "$2" ]; then
+		user="upstream"
+		git remote add upstream $repo
+	else
+		git remote add $user $repo
+	fi 
+	#echo $reponame $name $user
+done
+
+git fetch --all
