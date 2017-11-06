@@ -1,4 +1,4 @@
-FROM alpine
+FROM sampowers/docker-netatalk:latest
 
 RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
