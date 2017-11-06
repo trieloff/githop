@@ -35,6 +35,7 @@ fi
 
 echo "Copying essential files"
 docker cp ~/.ssh/id_rsa $CONTAINER:/root/.ssh/id_rsa
+docker cp ~/.m2/settings.xml $CONTAINER:/root/.m2/settings.xml
 
 echo "Checking out repos in container"
 docker exec $CONTAINER /usr/bin/githop $@

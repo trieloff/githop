@@ -34,5 +34,3 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
   mv apache-maven-$MAVEN_VERSION /usr/lib/mvn
 
 RUN rm -f /tmp/* /etc/apk/cache/*
-
-COPY settings.xml /root/.m2/settings.xml
