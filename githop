@@ -19,16 +19,7 @@ CONTAINER=$(docker run -p ${dockers}445:445 -it -d ${tag})
 
 if [ $(uname) = "Darwin" ]; then
 
-	echo "Configuring Samba"
-	docker exec $CONTAINER sed -i "10s/.*/[code-${dockers}]/" /etc/samba/smb.conf
-	docker exec $CONTAINER sed -i "13s|.*|   path = /code/${name}|" /etc/samba/smb.conf
-
-	echo "Starting SMB Daemon"
-	docker exec $CONTAINER smbd
-
-	echo "Creating Login User"
-	docker exec $CONTAINER setsmbpassword $CONTAINER
-
+	echo "Setting up AFP daemon"
 fi
 
 echo "Copying essential files"
@@ -40,9 +31,7 @@ docker exec $CONTAINER /usr/bin/githop $@
 if [ $(uname) = "Darwin" ]; then
 	mkdir -p $name
 	echo "Mounting Evide^H Workspace"
-	echo mount_smbfs -f 644 -o soft -N //root:${CONTAINER}@localhost:${dockers}445/code-${dockers} $name
-	mount_smbfs -f 644 -o soft -N //root:${CONTAINER}@localhost:${dockers}445/code-${dockers} $name
-
+	
 fi
 
 echo "Logging into container"
