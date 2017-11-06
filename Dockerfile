@@ -17,7 +17,7 @@ COPY lessfilter /root/.lessfilter
 COPY lesspipe.sh /usr/bin/lesspipe.sh
 COPY code2color /usr/bin/code2color
 COPY githop-fetch /usr/bin/githop
-RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/code2color /usr/bin/setsmbpassword
+RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/code2color
 
 WORKDIR /code
 ENTRYPOINT ["/bin/zsh"]
