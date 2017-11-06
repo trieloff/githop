@@ -5,6 +5,7 @@ tag="githop"
 
 if [[ "$1" == .* ]]; then
 	tag="${tag}${1#.}"
+	shift
 fi
 if [[ "$1" == :* ]]; then
 	tag="${basetag}${tag}${1}"
