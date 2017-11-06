@@ -18,11 +18,25 @@ name=$(echo $1 | sed -e "s/.*\\///" | sed -e "s/\\.git$//")
 
 dockers=$(docker ps | wc -l | sed -e "s/ //g")
 
-CONTAINER=$(docker run -p ${dockers}445:445 -it -d ${tag})
+CONTAINER=$(docker run -p ${dockers}548:548 -it -d ${tag})
 
 if [ $(uname) = "Darwin" ]; then
-
 	echo "Setting up AFP daemon"
+
+	docker exec $CONTAINER sed -i "10s/.*/[${name}]/" /etc/afp.conf
+	docker exec $CONTAINER sed -i "11s|.*|path = /code/${name}|" /etc/afp.conf
+	docker exec $CONTAINER sed -i "16s/.*/valid users = afp/" /etc/afp.conf
+
+	echo "Creating Login User"
+	docker exec $CONTAINER adduser -D -h /code afp
+	echo "afp:$CONTAINER" | docker exec -i $CONTAINER chpasswd
+	docker exec $CONTAINER chown -R afp /code
+
+	echo "Starting AFP daemon"
+
+	docker exec $CONTAINER netatalk
+	
+	#docker exec $CONTAINER /docker-entrypoint.sh
 fi
 
 echo "Copying essential files"
@@ -37,6 +51,9 @@ docker exec $CONTAINER /usr/bin/githop $@
 if [ $(uname) = "Darwin" ]; then
 	mkdir -p $name
 	echo "Mounting Evide^H Workspace"
+
+	echo mount_afp afp://afp:${CONTAINER}@localhost:${dockers}548/${name} ${name}
+	mount_afp afp://afp:${CONTAINER}@localhost:${dockers}548/${name} ${name}	
 	
 fi
 
