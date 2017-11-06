@@ -19,6 +19,8 @@ COPY code2color /usr/bin/code2color
 COPY githop-fetch /usr/bin/githop
 COPY setsmbpassword /usr/bin/setsmbpassword
 RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/code2color /usr/bin/setsmbpassword
+RUN mkdir /root/.ssh
+RUN mkdir /root/.m2
 
 EXPOSE 139
 EXPOSE 445
