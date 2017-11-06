@@ -13,7 +13,6 @@ ENV SHELL /bin/zsh
 COPY zshrc /root/.zshrc
 COPY lessfilter /root/.lessfilter
 COPY gitconfig /root/.gitconfig
-COPY known_hosts /root/.ssh/known_hosts
 COPY smb.conf /etc/samba/smb.conf
 
 COPY lesspipe.sh /usr/bin/lesspipe.sh
