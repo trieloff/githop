@@ -12,7 +12,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 ENV SHELL /bin/zsh
 COPY zshrc /root/.zshrc
 COPY lessfilter /root/.lessfilter
-COPY gitconfig /root/.gitconfig
 COPY smb.conf /etc/samba/smb.conf
 
 COPY lesspipe.sh /usr/bin/lesspipe.sh
