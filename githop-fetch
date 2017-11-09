@@ -31,3 +31,5 @@ do
 done
 
 git fetch --all
+
+chown -R afp /code
