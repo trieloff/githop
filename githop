@@ -19,6 +19,7 @@ name=$(echo $1 | sed -e "s/.*\\///" | sed -e "s/\\.git$//")
 dockers=$(docker ps | wc -l | sed -e "s/ //g")
 
 CONTAINER=$(docker run -p ${dockers}548:548 -it -d ${tag})
+echo "Started $CONTAINER"
 
 if [ $(uname) = "Darwin" ]; then
 	echo "Setting up AFP daemon"
@@ -28,7 +29,6 @@ if [ $(uname) = "Darwin" ]; then
 	docker exec $CONTAINER sed -i "16s/.*/valid users = afp/" /etc/afp.conf
 
 	echo "Creating Login User"
-	docker exec $CONTAINER adduser -D -h /code afp
 	echo "afp:$CONTAINER" | docker exec -i $CONTAINER chpasswd
 	docker exec $CONTAINER chown -R afp /code
 
