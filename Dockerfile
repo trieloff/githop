@@ -54,4 +54,4 @@ RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
 
 WORKDIR /code
-ENTRYPOINT ["/bin/zsh"]
+ENTRYPOINT ["su", "-", "afp"]
