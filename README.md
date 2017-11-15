@@ -29,9 +29,9 @@ Following tags are supported:
 
 ## Installation
 
-Just copy the `githop` script into your `$PATH` and make it executable.
-
-- [ ] write an auto-install script that can be curl-piped
+```
+curl https://raw.githubusercontent.com/trieloff/githop/master/install.zsh | sudo zsh
+```
 
 ## License
 
