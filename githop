@@ -45,6 +45,13 @@ docker cp ~/.m2/settings.xml $CONTAINER:/root/.m2/settings.xml
 docker cp ~/.ssh/known_hosts $CONTAINER:/root/.ssh/known_hosts
 docker cp ~/.gitconfig $CONTAINER:/root/.gitconfig
 
+docker cp ~/.ssh/id_rsa $CONTAINER:/code/.ssh/id_rsa
+docker cp ~/.m2/settings.xml $CONTAINER:/code/.m2/settings.xml
+docker cp ~/.ssh/known_hosts $CONTAINER:/code/.ssh/known_hosts
+docker cp ~/.gitconfig $CONTAINER:/code/.gitconfig
+
+docker exec $CONTAINER chown -R afp /code
+
 echo "Checking out repos in container"
 docker exec $CONTAINER /usr/bin/githop $@
 

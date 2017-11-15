@@ -19,17 +19,17 @@ do
 
 	if [ "$repo" = "$1" ]; then
 		user="origin"
-		git clone $repo
+		su afp -c "git clone $repo"
 		cd $name
 	elif [ "$repo" = "$2" ]; then
 		user="upstream"
-		git remote add upstream $repo
+		su afp -c "git remote add upstream $repo"
 	else
-		git remote add $user $repo
+		su afp -c "git remote add $user $repo"
 	fi 
 	#echo $reponame $name $user
 done
 
-git fetch --all
+su afp -c "git fetch --all"
 
 chown -R afp /code
