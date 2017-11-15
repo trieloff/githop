@@ -48,7 +48,7 @@ RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/cod
 RUN mkdir /root/.ssh
 RUN mkdir /root/.m2
 
-RUN mkdir /code/.m2
+RUN mkdir -p /code/.m2
 RUN mkdir /code/.ssh
 RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
