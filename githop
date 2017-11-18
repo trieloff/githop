@@ -130,6 +130,7 @@ docker attach $CONTAINER
 
 echo "Killing container"
 docker kill $CONTAINER
+docker rm $CONTAINER
 
 if [ $(uname) = "Darwin" ]; then
 
