@@ -1,9 +1,11 @@
 #!/bin/zsh
 
-projects="Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile"
+set -A projects Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile
 
-if (( ${+@} )); then
-  projects=$@
+if (( ${+1} )); then
+  p=$@
+  projects=(${(s: :)p})
+  echo $projects
 fi
 
 echo "Building $projects"
