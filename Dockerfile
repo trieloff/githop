@@ -37,6 +37,9 @@ RUN apk update && \
 RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | zsh || true
 
 ENV SHELL /bin/zsh
+# Default to UTF-8 file.encoding
+ENV LANG C.UTF-8
+
 COPY zshrc /root/.zshrc
 COPY lessfilter /root/.lessfilter
 
