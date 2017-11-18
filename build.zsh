@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-for project in *Dockerfile; do
+for project in Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile; do
   if [[ "$project" == Dockerfile ]];then
     docker build -t githop -f $project .
     docker tag githop trieloff/githop:latest
