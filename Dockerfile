@@ -44,6 +44,7 @@ COPY lessfilter /root/.lessfilter
 COPY lesspipe.sh /usr/bin/lesspipe.sh
 COPY code2color /usr/bin/code2color
 COPY githop-fetch /usr/bin/githop
+COPY tmux.conf /root/.tmux.conf
 RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/code2color
 RUN mkdir /root/.ssh
 RUN mkdir /root/.m2
@@ -54,6 +55,7 @@ RUN mkdir -p /code/.m2
 RUN mkdir /code/.ssh
 RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
+COPY tmux.conf /code/.tmux.conf
 
 WORKDIR /code
-ENTRYPOINT ["su", "-", "afp" "-c" "/usr/bin/tmux"]
+ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux"]
