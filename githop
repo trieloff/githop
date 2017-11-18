@@ -51,7 +51,7 @@ tag="githop"
 
 if [[ "$1" == .* ]]; then
 	tag="${tag}${1#.}"
-	shift
+	shift 
 elif [[ "$1" == :* ]]; then
 	tag="${basetag}${tag}${1}"
 	shift
@@ -65,7 +65,17 @@ fi
 
 echo $tag
 
-name=$(echo $1 | sed -e "s/.*\\///" | sed -e "s/\\.git$//")
+#get the git@ URL for different URL formats 
+set -A repos
+for repo in $@; do
+	echo $repo
+	name=$(get-name $repo)
+	org=$(get-org $repo)
+	host=$(get-host $repo)
+	repos+=("git@$host:$org/$name.git")
+done
+
+name=$(get-name $1)
 
 dockers=$(docker ps | wc -l | sed -e "s/ //g")
 
@@ -104,7 +114,7 @@ docker cp ~/.gitconfig $CONTAINER:/code/.gitconfig
 docker exec $CONTAINER chown -R afp /code
 
 echo "Checking out repos in container"
-docker exec $CONTAINER /usr/bin/githop $@
+docker exec $CONTAINER /usr/bin/githop $repos
 
 if [ $(uname) = "Darwin" ]; then
 	mkdir -p $name
