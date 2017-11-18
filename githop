@@ -1,15 +1,41 @@
 #!/bin/zsh
 
+get-host() {
+	host=$(echo $1 | sed -e "s/\.git$//" | sed -e "s|.*[@/]\(.*\)\(.*\)[/:]\(.*\)/\(.*\)|\1|")
+	echo $host
+}
+
+get-org() {
+	org=$(echo $1 | sed -e "s/\.git$//" | sed -e "s|.*[@/]\(.*\)\(.*\)[/:]\(.*\)/\(.*\)|\3|")
+	echo $org
+}
+
+get-name() {
+	name=$(echo $1 | sed -e "s/\.git$//" | sed -e "s|.*[@/]\(.*\)\(.*\)[/:]\(.*\)/\(.*\)|\4|")
+	echo $name
+}
+
+get-langs() {
+	curl -s https://api.$host/repos/$org/$name/languages | jq -r "to_entries[0].key" | tr '[:upper:]' '[:lower:]'
+}
+
 basetag="trieloff/"
 tag="githop"
 
 if [[ "$1" == .* ]]; then
 	tag="${tag}${1#.}"
 	shift
-fi
-if [[ "$1" == :* ]]; then
+elif [[ "$1" == :* ]]; then
 	tag="${basetag}${tag}${1}"
 	shift
+else
+	echo "trying to guess the tag"
+	name=$(get-name $1)
+	org=$(get-org $1)
+	host=$(get-host $1)
+	language=$(get-langs $host $org $name)
+	echo $language
+	#echo $host $org $name
 fi
 
 echo $tag
