@@ -56,4 +56,4 @@ RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
 
 WORKDIR /code
-ENTRYPOINT ["su", "-", "afp"]
+ENTRYPOINT ["su", "-", "afp" "-c" "/usr/bin/tmux"]
