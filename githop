@@ -4,7 +4,6 @@
 basetag="trieloff/"
 
 get-tag() {
-	echo $1
 	if [ "$1" = "java" ]; then
 		echo "${basetag}githop:java"
 	elif [ "$1" = "clojure" ]; then
