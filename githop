@@ -16,10 +16,14 @@ get-name() {
 }
 
 get-langs() {
-	curl -s https://api.$host/repos/$org/$name/languages | jq -r "to_entries[0].key" | tr '[:upper:]' '[:lower:]'
+	if (( ${+GITHUB_TOKEN} )); then
+		curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.$host/repos/$org/$name/languages | jq -r "to_entries[0].key" | tr '[:upper:]' '[:lower:]'
+	else
+		>&2 echo "Set GITHUB_TOKEN to avoid rate limit issues"
+		curl -s https://api.$host/repos/$org/$name/languages | jq -r "to_entries[0].key" | tr '[:upper:]' '[:lower:]'
+	fi
 }
 
-basetag="trieloff/"
 tag="githop"
 
 if [[ "$1" == .* ]]; then
@@ -29,13 +33,11 @@ elif [[ "$1" == :* ]]; then
 	tag="${basetag}${tag}${1}"
 	shift
 else
-	echo "trying to guess the tag"
 	name=$(get-name $1)
 	org=$(get-org $1)
 	host=$(get-host $1)
 	language=$(get-langs $host $org $name)
-	echo $language
-	#echo $host $org $name
+	tag=$(get-tag $language)
 fi
 
 echo $tag
