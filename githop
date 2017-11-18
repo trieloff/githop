@@ -128,8 +128,7 @@ fi
 echo "Logging into container"
 docker attach $CONTAINER
 
-echo "Killing container"
-docker kill $CONTAINER
+echo "Removing stale container"
 docker rm $CONTAINER
 
 if [ $(uname) = "Darwin" ]; then
