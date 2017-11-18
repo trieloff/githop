@@ -1,5 +1,29 @@
 #!/bin/zsh
 
+
+basetag="trieloff/"
+
+get-tag() {
+	echo $1
+	if [ "$1" = "java" ]; then
+		echo "${basetag}githop:java"
+	elif [ "$1" = "clojure" ]; then
+		echo "${basetag}githop:clojurescript"
+	elif [ "$1" = "clojurescript" ]; then
+		echo "${basetag}githop:clojurescript"
+	elif [ "$1" = "haskell" ]; then
+		echo "${basetag}githop:haskell"
+	elif [ "$1" = "erlang" ]; then
+		echo "${basetag}githop:erlang"
+	elif [ "$1" = "elixir" ]; then
+		echo "${basetag}githop:elixir"
+	elif [ "$1" = "javascript" ]; then
+		echo "${basetag}githop:node"
+	else
+		echo "${basetag}githop"
+	fi
+}
+
 get-host() {
 	host=$(echo $1 | sed -e "s/\.git$//" | sed -e "s|.*[@/]\(.*\)\(.*\)[/:]\(.*\)/\(.*\)|\1|")
 	echo $host
