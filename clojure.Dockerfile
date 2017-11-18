@@ -1,4 +1,4 @@
-FROM githop:java
+FROM trieloff/githop:java
 
 ENV LEIN_VERSION=2.8.1
 ENV LEIN_INSTALL=/usr/local/bin/
