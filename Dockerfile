@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-MAINTAINER Lars Trieloff <lars@trieloff.net>
+LABEL author="Lars Trieloff <lars@trieloff.net>" 
 
 ENV BUILDDEPS="curl build-base automake autoconf libtool avahi-dev libgcrypt-dev linux-pam-dev cracklib-dev db-dev libevent-dev krb5-dev tdb-dev file"
 ENV RUNTIMEDEPS="avahi libldap libgcrypt python avahi dbus dbus-glib py-dbus linux-pam cracklib db libevent krb5 tdb"
