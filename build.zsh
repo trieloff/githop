@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-set -A projects Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile
+set -A projects Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile rust.Dockerfile
 
 if (( ${+1} )); then
   p=$@
