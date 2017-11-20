@@ -47,6 +47,16 @@ get-langs() {
 	fi
 }
 
+free-port() {
+	for i in {1..100}; do
+		docker ps -f "expose=548" | grep "0.0.0.0:${i}548" > /dev/null
+		if [ $? -eq 1 ];then
+			echo $i
+			return
+		fi
+	done
+}
+
 tag="githop"
 
 if [[ "$1" == .* ]]; then
@@ -77,7 +87,7 @@ done
 
 name=$(get-name $1)
 
-dockers=$(docker ps | wc -l | sed -e "s/ //g")
+dockers=$(free-port)
 
 CONTAINER=$(docker run -p ${dockers}548:548 -it -d ${tag})
 echo "Started $CONTAINER"
