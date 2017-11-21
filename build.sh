@@ -1,10 +1,9 @@
-#!/bin/zsh
+#!/bin/bash
 
-set -A projects Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile rust.Dockerfile
+projects="Dockerfile java.Dockerfile clojure.Dockerfile clojurescript.Dockerfile node.Dockerfile erlang.Dockerfile elixir.Dockerfile haskell.Dockerfile rust.Dockerfile"
 
-if (( ${+1} )); then
-  p=$@
-  projects=(${(s: :)p})
+if [ ! -z "$1" ]; then
+  projects=$1
   echo $projects
 fi
 
