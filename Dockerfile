@@ -60,5 +60,10 @@ RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
 COPY tmux.conf /code/.tmux.conf
 
+RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/download/latest/OpenWhisk_CLI-latest-linux-386.tgz && \
+    tar -zxvf OpenWhisk_CLI-latest-linux-386.tgz && \
+    mv wsk /usr/bin/wsk && \
+    rm OpenWhisk_CLI-latest-linux-386.tgz
+
 WORKDIR /code
 ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux"]
