@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+ESSENTIALS=(".ssh/id_rsa" ".m2/settings.xml" ".ssh/known_hosts" ".gitconfig" ".wskprops")
 
 basetag="trieloff/"
 
@@ -111,15 +112,10 @@ if [ $(uname) = "Darwin" ]; then
 fi
 
 echo "Copying essential files"
-docker cp ~/.ssh/id_rsa $CONTAINER:/root/.ssh/id_rsa
-docker cp ~/.m2/settings.xml $CONTAINER:/root/.m2/settings.xml
-docker cp ~/.ssh/known_hosts $CONTAINER:/root/.ssh/known_hosts
-docker cp ~/.gitconfig $CONTAINER:/root/.gitconfig
-
-docker cp ~/.ssh/id_rsa $CONTAINER:/code/.ssh/id_rsa
-docker cp ~/.m2/settings.xml $CONTAINER:/code/.m2/settings.xml
-docker cp ~/.ssh/known_hosts $CONTAINER:/code/.ssh/known_hosts
-docker cp ~/.gitconfig $CONTAINER:/code/.gitconfig
+for essential in $ESSENTIALS; do
+	docker cp ~/$essential $CONTAINER:/root/$essential
+	docker cp ~/$essential $CONTAINER:/code/$essential
+done
 
 docker exec $CONTAINER chown -R afp /code
 
