@@ -30,7 +30,7 @@ RUN cd /build/netatalk \
 RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk update && \
-    apk add --no-cache zsh git curl jq openssh-client tmux micro@testing zip && \
+    apk add --no-cache zsh git curl jq openssh-client tmux micro@testing zip file && \
     rm -f /tmp/* /etc/apk/cache/*
 
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
