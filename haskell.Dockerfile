@@ -28,3 +28,5 @@ RUN curl -O https://www.haskell.org/cabal/release/cabal-install-2.0.0.0/cabal-in
 
 # Haskell stack
 RUN curl https://get.haskellstack.org/ | sh
+
+COPY tmux.conf /code/.tmux.conf

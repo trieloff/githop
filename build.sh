@@ -11,10 +11,15 @@ echo "Building $projects"
 
 for project in $projects; do
   if [[ "$project" == Dockerfile ]];then
+    cp tmux.conf.template tmux.conf
     docker build -t githop -f $project .
     docker tag githop trieloff/githop:latest
     docker push trieloff/githop:latest
   else
+    cp tmux.conf.template tmux.conf
+    shortname=$(echo $project | sed -e "s/\\..*//")
+    echo "" >> tmux.conf
+    echo 'set -g status-right "🐳  '${shortname}'"' >> tmux.conf
     docker build -t githop:$(echo $project | sed -e "s/\\..*//") -f $project .
     docker tag githop:$(echo $project | sed -e "s/\\..*//") trieloff/githop:$(echo $project | sed -e "s/\\..*//")
     docker push trieloff/githop:$(echo $project | sed -e "s/\\..*//")

@@ -7,3 +7,5 @@ RUN apk update && \
     rm -f /tmp/* /etc/apk/cache/*
 
 RUN npm install -g lumo-cljs calvin-cljs closh
+
+COPY tmux.conf /code/.tmux.conf

@@ -50,3 +50,5 @@ RUN set -xe \
 	)" \
 	&& apk add --virtual .erlang-rundeps $runDeps lksctp-tools \
 	&& apk del .fetch-deps .build-deps
+  
+  COPY tmux.conf /code/.tmux.conf

@@ -18,3 +18,5 @@ RUN set -xe \
 	&& unzip -d /usr/local elixir-precompiled.zip \
 	&& rm elixir-precompiled.zip \
 	&& apk del .build-deps
+  
+  COPY tmux.conf /code/.tmux.conf
