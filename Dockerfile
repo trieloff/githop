@@ -38,7 +38,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/t
 
 ENV SHELL /bin/zsh
 # Default to UTF-8 file.encoding
-ENV LANG C.UTF-8
+#ENV LANG C.UTF-8
 
 COPY zshrc /root/.zshrc
 COPY lessfilter /root/.lessfilter
@@ -66,4 +66,4 @@ RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/downloa
     rm OpenWhisk_CLI-latest-linux-386.tgz
 
 WORKDIR /code
-ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux"]
+ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux -u2"]
