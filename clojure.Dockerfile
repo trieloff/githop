@@ -23,4 +23,7 @@ ENV LEIN_ROOT 1
 # Install GPG
 RUN apk add --no-cache gnupg
 
+RUN mkdir /root/.lein
+RUN mkdir /code/.lein
+
 COPY tmux.conf /code/.tmux.conf

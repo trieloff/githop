@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-ESSENTIALS=(".ssh/id_rsa" ".m2/settings.xml" ".ssh/known_hosts" ".gitconfig" ".wskprops")
+ESSENTIALS=(".ssh/id_rsa" ".m2/settings.xml" ".ssh/known_hosts" ".gitconfig" ".wskprops" ".lein/profiles.clj" ".gnupg")
 
 basetag="trieloff/"
 
