@@ -65,5 +65,8 @@ RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/downloa
     mv wsk /usr/bin/wsk && \
     rm OpenWhisk_CLI-latest-linux-386.tgz
 
+COPY cistatus.sh /usr/bin/cistatus
+RUN chmod +x /usr/bin/cistatus
+
 WORKDIR /code
 ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux -u2"]

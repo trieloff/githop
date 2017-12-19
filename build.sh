@@ -19,7 +19,7 @@ for project in $projects; do
     cp tmux.conf.template tmux.conf
     shortname=$(echo $project | sed -e "s/\\..*//")
     echo "" >> tmux.conf
-    echo 'set -g status-right "🐳  '${shortname}'"' >> tmux.conf
+    echo 'set -g status-right "🐳  '${shortname}' #(cistatus)"' >> tmux.conf
     docker build -t githop:$(echo $project | sed -e "s/\\..*//") -f $project . || exit 1
     docker tag githop:$(echo $project | sed -e "s/\\..*//") trieloff/githop:$(echo $project | sed -e "s/\\..*//")
     docker push trieloff/githop:$(echo $project | sed -e "s/\\..*//")
