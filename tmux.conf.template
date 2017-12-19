@@ -65,3 +65,6 @@ set-window-option -g clock-mode-colour green #green
 
 # bell
 set-window-option -g window-status-bell-style fg=black,bg=red #base02, red
+
+# update status once a minute
+tmux set status-interval 60
