@@ -1,5 +1,7 @@
 # githop – Hop into your Development Environment from Git
 
+[![CircleCI](https://circleci.com/gh/trieloff/githop.svg?style=svg)](https://circleci.com/gh/trieloff/githop)
+
 What if you could just hop into a ready-made development environment with all your favorite tools simply by providing a Git Remote URL?
 
 *githop* uses Git, Docker, and ZSH to do this for you. All you need is a running Docker, and the `githop` shell script.
