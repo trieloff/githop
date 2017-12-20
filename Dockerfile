@@ -30,7 +30,7 @@ RUN cd /build/netatalk \
 RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk update && \
-    apk add --no-cache zsh git curl jq openssh-client tmux micro@testing zip file && \
+    apk add --no-cache zsh git curl jq openssh-client tmux micro@testing zip file tig && \
     rm -f /tmp/* /etc/apk/cache/*
 
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
@@ -48,6 +48,7 @@ COPY lesspipe.sh /usr/bin/lesspipe.sh
 COPY code2color /usr/bin/code2color
 COPY githop-fetch /usr/bin/githop
 COPY tmux.conf /root/.tmux.conf
+COPY tigrc /root/.tigrc
 RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/code2color
 RUN mkdir /root/.ssh
 RUN mkdir /root/.m2
@@ -59,6 +60,7 @@ RUN mkdir /code/.ssh
 RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
 COPY tmux.conf /code/.tmux.conf
+COPY tigrc /code/.tigrc
 
 RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/download/latest/OpenWhisk_CLI-latest-linux-386.tgz && \
     tar -zxvf OpenWhisk_CLI-latest-linux-386.tgz && \
