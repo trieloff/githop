@@ -16,6 +16,22 @@ jobs:
         run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh java.Dockerfile
+  build-clojure: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh clojure.Dockerfile
+  build-clojurescript: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh clojurescript.Dockerfile
 version: 2
 workflows: 
   build: 
@@ -24,4 +40,10 @@ workflows:
       - build-java:
           requires: 
             - build-base
+      - build-clojure:
+          requires: 
+            - build-java
+      - build-clojurescript:
+          requires: 
+            - build-clojure
   version: 2
