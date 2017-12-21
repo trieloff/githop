@@ -21,8 +21,7 @@ workflows:
   build: 
     jobs: 
       - build-base
-      - 
-        build-java: ~
-        requires: 
-          - build-base
+      - build-java:
+          requires: 
+            - build-base
   version: 2
