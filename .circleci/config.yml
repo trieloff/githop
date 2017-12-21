@@ -27,4 +27,6 @@ workflows:
   build:
     jobs:
       - build-base
-      - build-java
+      - build-java:
+      	requires:
+      	  - build-base
