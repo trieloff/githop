@@ -32,6 +32,46 @@ jobs:
         run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh clojurescript.Dockerfile
+  build-node: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh node.Dockerfile
+  build-rust: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh rust.Dockerfile
+  build-erlang: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh erlang.Dockerfile
+  build-elixir: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh elixir.Dockerfile
+  build-haskell: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh haskell.Dockerfile
 version: 2
 workflows: 
   build: 
@@ -46,4 +86,19 @@ workflows:
       - build-clojurescript:
           requires: 
             - build-clojure
+      - build-node:
+          requires: 
+            - build-base
+      - build-rust:
+          requires: 
+            - build-base
+      - build-haskell:
+          requires: 
+            - build-base
+      - build-erlang:
+          requires: 
+            - build-base
+      - build-elixir:
+          requires: 
+            - build-erlang
   version: 2
