@@ -1,32 +1,28 @@
+--- 
+jobs: 
+  build-base: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh Dockerfile
+  build-java: 
+    machine: true
+    steps: 
+      - checkout
+      - 
+        run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh java.Dockerfile
 version: 2
-jobs:
- build-base:
-   machine: true
-   steps:
-     - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-         docker login -u $DOCKER_USER -p $DOCKER_PASS
-         bash build.sh Dockerfile
-
- build-java:
-   machine: true
-   steps:
-     - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-         docker login -u $DOCKER_USER -p $DOCKER_PASS
-         bash build.sh java.Dockerfile
-
-
-
-workflows:
-  version: 2
-  build:
-    jobs:
+workflows: 
+  build: 
+    jobs: 
       - build-base
-      - build-java:
-      	requires:
-      	  - build-base
+      - 
+        build-java: ~
+        requires: 
+          - build-base
+  version: 2
