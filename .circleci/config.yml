@@ -4,72 +4,63 @@ jobs:
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh Dockerfile
   build-java: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh java.Dockerfile
   build-clojure: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh clojure.Dockerfile
   build-clojurescript: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh clojurescript.Dockerfile
   build-node: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh node.Dockerfile
   build-rust: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh rust.Dockerfile
   build-erlang: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh erlang.Dockerfile
   build-elixir: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh elixir.Dockerfile
   build-haskell: 
     machine: true
     steps: 
       - checkout
-      - 
-        run: |
+      - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh haskell.Dockerfile
 version: 2
