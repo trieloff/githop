@@ -90,4 +90,7 @@ LESSOPEN="|~/.lessfilter %s"
 export LESSOPEN
 LESS_ADVANCED_PREPROCESSOR=1; export LESS_ADVANCED_PREPROCESSOR
 
+export MAVEN_HOME=/usr/lib/mvn
+export PATH=$PATH:$MAVEN_HOME/bin
+
 setopt no_share_history
