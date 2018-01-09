@@ -20,9 +20,6 @@ RUN mkdir -p $LEIN_INSTALL \
 ENV PATH=$PATH:$LEIN_INSTALL
 ENV LEIN_ROOT 1
 
-# Install GPG
-RUN apk add --no-cache gnupg
-
 RUN mkdir /root/.lein
 RUN mkdir /code/.lein
 

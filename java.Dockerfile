@@ -20,6 +20,8 @@ RUN set -x \
 		openjdk8 \
 	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
 
+# Install GPG
+RUN apk add --no-cache gnupg
 
 ENV MAVEN_VERSION 3.5.2
 ENV MAVEN_HOME /usr/lib/mvn
