@@ -1,4 +1,4 @@
-FROM githop
+FROM trieloff/githop:latest
 
 RUN apk add \
         alpine-sdk \

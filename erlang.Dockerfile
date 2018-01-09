@@ -1,4 +1,4 @@
-FROM githop
+FROM trieloff/githop:latest
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8

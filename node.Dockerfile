@@ -1,4 +1,4 @@
-FROM githop
+FROM trieloff/githop:latest
 
 RUN apk update && \
     apk add --no-cache nodejs nodejs-npm && \

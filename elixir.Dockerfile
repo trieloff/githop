@@ -1,4 +1,4 @@
-FROM githop:erlang
+FROM trieloff/githop:erlang
 
 # elixir expects utf8.
 ENV ELIXIR_VERSION="v1.5.2" \
