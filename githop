@@ -76,22 +76,41 @@ fi
 
 echo $tag
 
+branch="master"
+dockerargs=""
+
 #get the git@ URL for different URL formats 
 set -A repos
 for repo in $@; do
-	echo $repo
-	name=$(get-name $repo)
-	org=$(get-org $repo)
-	host=$(get-host $repo)
-	repos+=("git@$host:$org/$name.git")
+#	echo $repo
+	if [[ "$repo" == "--" ]]; then
+		shift
+#		echo "got the end of the args"
+		dockerargs=$(echo $@ | sed -e "s/.* -- //")
+#		echo "that's all"
+		break;
+	elif [[ "$repo" == :* ]]; then
+#		echo "branch: $repo"
+		branch="${repo:1}"
+	else
+		echo $repo
+		name=$(get-name $repo)
+		org=$(get-org $repo)
+		host=$(get-host $repo)
+		repos+=("git@$host:$org/$name.git")
+	fi
 done
+
+echo Getting $branch
+echo From $repos
+echo With args $dockerargs
 
 name=$(get-name $1)
 
 dockers=$(free-port)
 
 docker pull ${tag}
-CONTAINER=$(docker run -p ${dockers}548:548 -it -d ${tag})
+CONTAINER=$(docker run -p ${dockers}548:548 -it -d ${tag} ${dockerargs})
 echo "Started $CONTAINER"
 
 if [ $(uname) = "Darwin" ]; then
@@ -121,7 +140,7 @@ done
 docker exec $CONTAINER chown -R afp /code
 
 echo "Checking out repos in container"
-docker exec $CONTAINER /usr/bin/githop $repos
+docker exec $CONTAINER /usr/bin/githop $repos :${branch}
 
 if [ $(uname) = "Darwin" ]; then
 	mkdir -p $name

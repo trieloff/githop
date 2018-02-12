@@ -9,7 +9,7 @@ cd /code
 reponame=$(echo $1 | sed -e "s/.*://" | sed -e "s/\\.git$//")
 myname=$(echo $reponame | sed -e "s/^.*\\///")
 user=$(echo $reponame | sed -e "s/\\/.*$//")
-
+branch="master"
 
 for repo in $@
 do
@@ -17,7 +17,10 @@ do
 	name=$(echo $reponame | sed -e "s/^.*\\///")
 	user=$(echo $reponame | sed -e "s/\\/.*$//")
 
-	if [ "$repo" = "$1" ]; then
+	
+	if [[ "$repo" == :* ]]; then
+		branch="${repo:1}"
+	elif [ "$repo" = "$1" ]; then
 		user="origin"
 		su afp -c "git clone $repo"
 		cd $name
@@ -31,5 +34,7 @@ do
 done
 
 su afp -c "git fetch --all"
+su afp -c "git checkout ${branch}"
+su afp -c "git submodule update --init --recursive"
 
 chown -R afp /code
