@@ -110,7 +110,7 @@ name=$(get-name $1)
 dockers=$(free-port)
 
 docker pull ${tag}
-CONTAINER=$(docker run -p ${dockers}548:548 -it -d ${tag} ${dockerargs})
+CONTAINER=$(docker run ${dockerargs} -p ${dockers}548:548 -it -d ${tag})
 echo "Started $CONTAINER"
 
 if [ $(uname) = "Darwin" ]; then

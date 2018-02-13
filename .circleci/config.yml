@@ -35,6 +35,13 @@ jobs:
       - run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             bash build.sh node.Dockerfile
+  build-node8: 
+    machine: true
+    steps: 
+      - checkout
+      - run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            bash build.sh node8.Dockerfile
   build-rust: 
     machine: true
     steps: 
@@ -77,6 +84,9 @@ workflows:
       - build-clojurescript:
           requires: 
             - build-clojure
+      - build-node8:
+          requires: 
+            - build-base
       - build-node:
           requires: 
             - build-base
