@@ -1,3 +1,7 @@
+---
+template: test
+---
+
 # githop – Hop into your Development Environment from Git
 
 [![CircleCI](https://circleci.com/gh/trieloff/githop.svg?style=svg)](https://circleci.com/gh/trieloff/githop)
