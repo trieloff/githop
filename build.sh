@@ -12,7 +12,7 @@ echo "Building $projects"
 for project in $projects; do
   if [[ "$project" == Dockerfile ]];then
     cp tmux.conf.template tmux.conf
-    docker build -t githop -f $project .
+    docker build -t githop -f $project . || exit 1
     docker tag githop trieloff/githop:latest
     docker push trieloff/githop:latest
   else
