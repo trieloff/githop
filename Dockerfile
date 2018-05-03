@@ -36,13 +36,18 @@ RUN apk update && \
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
 RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | zsh || true
 
+RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.2.3/bat-v0.2.3-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.2.3-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.2.3-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.2.3-x86_64-unknown-linux-musl*
+
+
+
+
+
 ENV SHELL /bin/zsh
 # Default to UTF-8 file.encoding
 #ENV LANG C.UTF-8
 
 COPY zshrc /root/.zshrc
 COPY lessfilter /root/.lessfilter
-
 
 COPY lesspipe.sh /usr/bin/lesspipe.sh
 COPY code2color /usr/bin/code2color
@@ -59,6 +64,7 @@ RUN mkdir -p /code/.m2
 RUN mkdir /code/.ssh
 RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
+RUN cp /root/.lessfilter /code/.lessfilter
 COPY tmux.conf /code/.tmux.conf
 COPY tigrc /code/.tigrc
 
