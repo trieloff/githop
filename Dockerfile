@@ -30,11 +30,11 @@ RUN cd /build/netatalk \
 RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk update && \
-    apk add --no-cache zsh git curl jq openssh-client tmux micro@testing zip file tig && \
+    apk add --no-cache zsh curl jq openssh-client tmux micro@testing zip file git tig less && \
     rm -f /tmp/* /etc/apk/cache/*
 
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
-RUN curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | zsh || true
+RUN git --version && curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh || true
 
 RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.2.3/bat-v0.2.3-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.2.3-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.2.3-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.2.3-x86_64-unknown-linux-musl*
 
