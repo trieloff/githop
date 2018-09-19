@@ -26,7 +26,17 @@ ZSH_THEME="robbyrussell"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
+
+function git_branch {
+  BRANCH_REFS=$(git symbolic-ref HEAD 2>/dev/null) || return
+  GIT_BRANCH="${BRANCH_REFS#refs/heads/}"
+  [ -n "$GIT_BRANCH" ] && echo "($GIT_BRANCH)"
+}
+
+function precmd {
+  echo -ne "\e]1;🐳 ${PWD//*\//} $(git_branch)\a"
+}
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -91,6 +101,7 @@ export LESSOPEN
 LESS_ADVANCED_PREPROCESSOR=1; export LESS_ADVANCED_PREPROCESSOR
 
 export MAVEN_HOME=/usr/lib/mvn
-export PATH=$PATH:$MAVEN_HOME/bin
+export PATH=$PATH:$MAVEN_HOME/bin:~/.npm-global
+export NPM_CONFIG_PREFIX=~/.npm-global
 
 setopt no_share_history

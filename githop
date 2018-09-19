@@ -18,7 +18,7 @@ get-tag() {
 	elif [ "$1" = "elixir" ]; then
 		echo "${basetag}githop:elixir"
 	elif [ "$1" = "javascript" ]; then
-		echo "${basetag}githop:node"
+		echo "${basetag}githop:node8"
 	else
 		echo "${basetag}githop"
 	fi
