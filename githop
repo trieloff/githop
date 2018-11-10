@@ -105,7 +105,12 @@ echo Getting $branch
 echo From $repos
 echo With args $dockerargs
 
+
 name=$(get-name $1)
+
+# Set terminal title
+echo -ne "\e]1;🐳 ${name}\a"
+
 
 dockers=$(free-port)
 
