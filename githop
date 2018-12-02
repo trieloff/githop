@@ -153,7 +153,7 @@ if [ $(uname) = "Darwin" ]; then
 
 	echo mount_afp afp://afp:${CONTAINER}@localhost:${dockers}548/${name} ${name}
 	mount_afp afp://afp:${CONTAINER}@localhost:${dockers}548/${name} ${name}	
-	
+	vscode $name
 fi
 
 echo "Logging into container"
