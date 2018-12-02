@@ -5,7 +5,7 @@ case "$1" in
 		exit 0
 		;;
 	*.json)
-		jq . "$1"
+		jq -C . "$1"
 		exit 0
 		;;
 esac

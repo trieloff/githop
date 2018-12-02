@@ -28,19 +28,20 @@ RUN cd /build/netatalk \
     && apk del --purge $BUILDDEPS
 
 RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN echo "@community http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 
 RUN apk update && \
-    apk add --no-cache zsh curl jq openssh-client tmux micro@testing zip file git tig less && \
+    apk add --no-cache zsh curl jq openssh-client tmux micro@testing zip file git tig less bash asciinema httpie@community py-pip man-pages man mdocml-apropos less less-doc && \
     rm -f /tmp/* /etc/apk/cache/*
 
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
 RUN git --version && curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh || true
 
-RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.2.3/bat-v0.2.3-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.2.3-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.2.3-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.2.3-x86_64-unknown-linux-musl*
+RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.9.0/bat-v0.9.0-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.9.0-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.9.0-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.9.0-x86_64-unknown-linux-musl*
 
-
-
-
+RUN pip install mdv
+RUN pip install git+https://github.com/jeffkaufman/icdiff.git
+RUN pip install tldr
 
 ENV SHELL /bin/zsh
 # Default to UTF-8 file.encoding

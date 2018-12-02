@@ -16,6 +16,16 @@ What if you could just hop into a ready-made development environment with all yo
 * (on macOS only) mounts your working directory from the container
 * supports Java, Node, Clojure and ClojureScript development
 
+### What's inside?
+
+- Default shell: `zsh`
+- Shell window and session management with `tmux`
+- `http` client: HTTPIE (`curl` is available, too)
+- `git`, `tig`, and `git icdiff`
+- `bat`, `mdv`, `jq`, `tldr`
+- `micro`
+- `wsk`
+
 ## Usage
 
 ```bash
