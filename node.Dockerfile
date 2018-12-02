@@ -13,4 +13,9 @@ COPY --from=0 /usr/local /usr/local
 COPY --from=0 /usr/lib /usr/lib
 COPY --from=0 /opt /opt
 
+RUN npm install -g npm@latest
+RUN npm i -g gh
+RUN su - afp -c "npm i @adobe/helix-cli"
+RUN mkdir -p /usr/local/node_modules/hlx && mv /code/node_modules /usr/local/node_modules/hlx && ln -s /usr/local/node_modules/hlx/node_modules/.bin/hlx /usr/local/bin/hlx
+
 COPY tmux.conf /code/.tmux.conf
