@@ -9,6 +9,11 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
+if [ -e "/usr/local/bin/node" ]; then
+  ZSH_THEME="spaceship"
+  export SPACESHIP_PROMPT_SEPARATE_LINE
+fi
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -61,7 +66,7 @@ function precmd {
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -105,3 +110,4 @@ export PATH=$PATH:$MAVEN_HOME/bin:~/.npm-global
 export NPM_CONFIG_PREFIX=~/.npm-global
 
 setopt no_share_history
+export SPACESHIP_PROMPT_SEPARATE_LINE

@@ -77,5 +77,7 @@ RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/downloa
 COPY cistatus.sh /usr/bin/cistatus
 RUN chmod +x /usr/bin/cistatus
 
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions /code/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
 WORKDIR /code
 ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux -u2"]
