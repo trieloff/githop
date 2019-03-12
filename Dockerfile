@@ -74,6 +74,11 @@ RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/downloa
     mv wsk /usr/bin/wsk && \
     rm OpenWhisk_CLI-latest-linux-386.tgz
 
+RUN curl -OL https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip && \
+  unzip exa-linux-x86_64-0.8.0.zip && \
+  mv exa-linux-x86_64 /usr/bin/exa && \
+  chmod +x /usr/bin/exa
+
 COPY cistatus.sh /usr/bin/cistatus
 RUN chmod +x /usr/bin/cistatus
 

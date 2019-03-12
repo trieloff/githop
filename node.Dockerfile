@@ -15,7 +15,7 @@ COPY --from=0 /opt /opt
 
 RUN npm install -g npm@latest
 RUN npm i -g gh
-RUN su - afp -c "npm i @adobe/helix-cli"
+RUN su - afp -c "npm i @adobe/helix-cli@0.13.8"
 RUN mkdir -p /usr/local/node_modules/hlx && mv /code/node_modules /usr/local/node_modules/hlx && ln -s /usr/local/node_modules/hlx/node_modules/.bin/hlx /usr/local/bin/hlx
 
 RUN git clone https://github.com/denysdovhan/spaceship-prompt.git /code/.oh-my-zsh/custom/themes/spaceship-prompt
