@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:10-alpine
 
 FROM trieloff/githop:latest
 
@@ -15,7 +15,9 @@ COPY --from=0 /opt /opt
 
 RUN npm install -g npm@latest
 RUN npm i -g gh
-RUN su - afp -c "npm i @adobe/helix-cli@0.13.8"
+RUN ln -s /usr/local/bin/node /usr/bin/node
+RUN ln -s /usr/local/bin/npm /usr/bin/npm
+RUN su - afp -c "/usr/local/bin/npm i @adobe/helix-cli"
 RUN mkdir -p /usr/local/node_modules/hlx && mv /code/node_modules /usr/local/node_modules/hlx && ln -s /usr/local/node_modules/hlx/node_modules/.bin/hlx /usr/local/bin/hlx
 
 RUN git clone https://github.com/denysdovhan/spaceship-prompt.git /code/.oh-my-zsh/custom/themes/spaceship-prompt
