@@ -1,11 +1,40 @@
-FROM alpine:latest
+FROM theelves/elvish AS elvish
+FROM alpine:edge
 
 LABEL author="Lars Trieloff <lars@trieloff.net>" 
 
-ENV BUILDDEPS="curl build-base automake autoconf libtool avahi-dev libgcrypt-dev linux-pam-dev cracklib-dev db-dev libevent-dev krb5-dev tdb-dev file"
+ENV BUILDDEPS="curl build-base automake autoconf libtool avahi-dev libgcrypt-dev linux-pam-dev cracklib-dev db-dev libevent-dev krb5-dev tdb-dev file cargo cmake"
 ENV RUNTIMEDEPS="avahi libldap libgcrypt python avahi dbus dbus-glib py-dbus linux-pam cracklib db libevent krb5 tdb"
 
 RUN apk --no-cache add $BUILDDEPS $RUNTIMEDEPS
+
+# exa, a modern replacement for ls
+
+RUN mkdir -p /build/exa \
+  && curl -Ls https://github.com/ogham/exa/archive/v0.8.0.tar.gz | tar zx -C /build/exa --strip-components=1
+
+RUN cd /build/exa \
+  && RUSTFLAGS="-C target-feature=-crt-static" cargo build --release --verbose
+
+RUN cd /build/exa \
+  && install -m755 -D target/release/exa "/usr/bin/exa" \ 
+  && install -m644 -D contrib/completions.zsh "/usr/share/zsh/site-functions/_exa"
+
+# elvish shell
+
+#RUN mkdir -p /build/elvish \
+#  && curl -Ls https://github.com/elves/elvish/archive/v0.8.tar.gz | tar zx -C /build/elvish --strip-components=1
+#
+#RUN cd /build/elvish \
+#  && exa \
+#  && go build -o bin/elvish \
+#  && exa bin
+#
+#RUN cd /build/elvish \
+#  && install -m 755 -D bin/elvish /usr/bin/elvish
+
+COPY --from=elvish /bin/elvish /bin/elvish
+
 RUN mkdir -p /build/netatalk \
     && curl -Ls https://github.com/Netatalk/Netatalk/archive/netatalk-3-1-10.tar.gz | tar zx -C /build/netatalk --strip-components=1
 RUN cd /build/netatalk \
@@ -24,8 +53,7 @@ RUN cd /build/netatalk \
     && make \
     && make install \
     && cd / && rm -rf /build \
-    && mkdir /media/share \
-    && apk del --purge $BUILDDEPS
+    && mkdir /media/share
 
 RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN echo "@community http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
@@ -37,13 +65,14 @@ RUN apk update && \
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
 RUN git --version && curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh || true
 
-RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.9.0/bat-v0.9.0-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.9.0-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.9.0-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.9.0-x86_64-unknown-linux-musl*
+RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-v0.10.0-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.10.0-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.10.0-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.10.0-x86_64-unknown-linux-musl*
 
 RUN pip install mdv
 RUN pip install git+https://github.com/jeffkaufman/icdiff.git
 RUN pip install tldr
+RUN pip3 install commitizen
 
-ENV SHELL /bin/zsh
+ENV SHELL /bin/elvish
 # Default to UTF-8 file.encoding
 #ENV LANG C.UTF-8
 
@@ -53,8 +82,12 @@ COPY lessfilter /root/.lessfilter
 COPY lesspipe.sh /usr/bin/lesspipe.sh
 COPY code2color /usr/bin/code2color
 COPY githop-fetch /usr/bin/githop
+COPY git-cz /usr/bin/git-cz
 COPY tmux.conf /root/.tmux.conf
+RUN chmod +x /usr/bin/git-cz
 COPY tigrc /root/.tigrc
+RUN mkdir /root/.elvish
+COPY rc.elv /root/.elvish/rc.elv
 RUN chmod +x /usr/bin/githop /root/.lessfilter /usr/bin/lesspipe.sh /usr/bin/code2color
 RUN mkdir /root/.ssh
 RUN mkdir /root/.m2
@@ -66,6 +99,7 @@ RUN mkdir /code/.ssh
 RUN cp /root/.zshrc /code/.zshrc
 RUN cp -r /root/.oh-my-zsh /code/.oh-my-zsh
 RUN cp /root/.lessfilter /code/.lessfilter
+RUN cp -r /root/.elvish /code/.elvish
 COPY tmux.conf /code/.tmux.conf
 COPY tigrc /code/.tigrc
 
@@ -74,15 +108,12 @@ RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/downloa
     mv wsk /usr/bin/wsk && \
     rm OpenWhisk_CLI-latest-linux-386.tgz
 
-RUN curl -OL https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip && \
-  unzip exa-linux-x86_64-0.8.0.zip && \
-  mv exa-linux-x86_64 /usr/bin/exa && \
-  chmod +x /usr/bin/exa
-
 COPY cistatus.sh /usr/bin/cistatus
 RUN chmod +x /usr/bin/cistatus
 
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions /code/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+RUN chown -R afp /code
 
 WORKDIR /code
 ENTRYPOINT ["su", "-", "afp", "-c", "/usr/bin/tmux -u2"]
