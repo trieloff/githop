@@ -17,7 +17,7 @@ try {
                 match = ( re:find ":(.*)/(.*).git" $url )
                 owner = $match[groups][1][text]
                 project = $match[groups][2][text]
-                status = (curl https://circleci.com/api/v1.1/project/$versioncontrol/$owner/$project/tree/$branch"?limit=1" 2> /dev/null | jq -r ".[0].failed")
+                status = (curl https://circleci.com/api/v1.1/project/$versioncontrol/$owner/$project/tree/$branch"?limit=1" 2> /dev/null | jq -r ".[0].failed" 2> /dev/null )
                 if ( ==s $status "true" ) {
                         edit:styled "CI ⨯" "red"
                 } elif ( ==s $status "false" ) {
