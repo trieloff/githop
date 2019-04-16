@@ -53,4 +53,6 @@ edit:completion:arg-completer[npm] = [@rest]{
   npm completion -- $@rest 2> /dev/null
 }
 
+set-env EDITOR micro
+
 clear
