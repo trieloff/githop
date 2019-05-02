@@ -4,6 +4,7 @@ use re
 
 epm:install github.com/zzamboni/elvish-completions
 epm:install github.com/muesli/elvish-libs
+epm:install github.com/trieloff/elvish-completions
 use github.com/muesli/elvish-libs/theme/powerline
 
 ci = {
