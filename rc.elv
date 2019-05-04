@@ -5,6 +5,7 @@ use re
 epm:install github.com/zzamboni/elvish-completions
 epm:install github.com/muesli/elvish-libs
 epm:install github.com/trieloff/elvish-completions
+
 use github.com/muesli/elvish-libs/theme/powerline
 
 ci = {
@@ -44,6 +45,7 @@ fn ls [@_args]{ exa $@_args }
 use github.com/zzamboni/elvish-completions/git
 use github.com/trieloff/elvish-completions/npx
 use github.com/trieloff/elvish-completions/npm
+use github.com/trieloff/elvish-completions/wsk
 
 
 set-env EDITOR micro
