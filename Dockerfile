@@ -1,5 +1,5 @@
 FROM theelves/elvish AS elvish
-FROM alpine:edge
+FROM alpine:3.11.2
 
 LABEL author="Lars Trieloff <lars@trieloff.net>" 
 
@@ -11,7 +11,7 @@ RUN apk --no-cache add $BUILDDEPS $RUNTIMEDEPS
 # exa, a modern replacement for ls
 
 RUN mkdir -p /build/exa \
-  && curl -Ls https://github.com/ogham/exa/archive/v0.8.0.tar.gz | tar zx -C /build/exa --strip-components=1
+  && curl -Ls https://github.com/ogham/exa/archive/v0.9.0.tar.gz | tar zx -C /build/exa --strip-components=1
 
 RUN cd /build/exa \
   && RUSTFLAGS="-C target-feature=-crt-static" cargo build --release --verbose
