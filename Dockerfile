@@ -65,7 +65,7 @@ RUN apk update && \
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
 RUN git --version && curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh || true
 
-RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.10.0/bat-v0.10.0-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.10.0-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.10.0-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.10.0-x86_64-unknown-linux-musl*
+RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.12.1/bat-v0.12.1-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.12.1-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.12.1-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.12.1-x86_64-unknown-linux-musl*
 
 RUN pip install mdv
 RUN pip install git+https://github.com/jeffkaufman/icdiff.git
@@ -103,10 +103,10 @@ RUN cp -r /root/.elvish /code/.elvish
 COPY tmux.conf /code/.tmux.conf
 COPY tigrc /code/.tigrc
 
-RUN curl -OLs https://github.com/apache/incubator-openwhisk-cli/releases/download/latest/OpenWhisk_CLI-latest-linux-386.tgz && \
-    tar -zxvf OpenWhisk_CLI-latest-linux-386.tgz && \
+RUN curl -OLs https://github.com/apache/openwhisk-cli/releases/download/1.0.0/OpenWhisk_CLI-1.0.0-linux-386.tgz && \
+    tar -zxvf OpenWhisk_CLI-1.0.0-linux-386.tgz && \
     mv wsk /usr/bin/wsk && \
-    rm OpenWhisk_CLI-latest-linux-386.tgz
+    rm OpenWhisk_CLI-1.0.0-linux-386.tgz
 
 COPY cistatus.sh /usr/bin/cistatus
 RUN chmod +x /usr/bin/cistatus
