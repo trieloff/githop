@@ -103,6 +103,8 @@ RUN cp -r /root/.elvish /code/.elvish
 COPY tmux.conf /code/.tmux.conf
 COPY tigrc /code/.tigrc
 
+RUN git clone https://github.com/tmux-plugins/tpm /code/.tmux/plugins/tpm
+
 RUN curl -OLs https://github.com/apache/openwhisk-cli/releases/download/1.0.0/OpenWhisk_CLI-1.0.0-linux-386.tgz && \
     tar -zxvf OpenWhisk_CLI-1.0.0-linux-386.tgz && \
     mv wsk /usr/bin/wsk && \
