@@ -1,9 +1,9 @@
-FROM theelves/elvish AS elvish
+
 FROM alpine:3.11.2
 
 LABEL author="Lars Trieloff <lars@trieloff.net>" 
 
-ENV BUILDDEPS="curl build-base automake autoconf libtool avahi-dev libgcrypt-dev linux-pam-dev cracklib-dev db-dev libevent-dev krb5-dev tdb-dev file cargo cmake"
+ENV BUILDDEPS="curl build-base automake autoconf libtool avahi-dev libgcrypt-dev linux-pam-dev cracklib-dev db-dev libevent-dev krb5-dev tdb-dev file cargo cmake go"
 ENV RUNTIMEDEPS="avahi libldap libgcrypt python avahi dbus dbus-glib py-dbus linux-pam cracklib db libevent krb5 tdb"
 
 RUN apk --no-cache add $BUILDDEPS $RUNTIMEDEPS
@@ -22,18 +22,17 @@ RUN cd /build/exa \
 
 # elvish shell
 
-#RUN mkdir -p /build/elvish \
-#  && curl -Ls https://github.com/elves/elvish/archive/v0.8.tar.gz | tar zx -C /build/elvish --strip-components=1
-#
-#RUN cd /build/elvish \
-#  && exa \
-#  && go build -o bin/elvish \
-#  && exa bin
-#
-#RUN cd /build/elvish \
-#  && install -m 755 -D bin/elvish /usr/bin/elvish
+RUN mkdir -p /build/elvish \
+  && curl -Ls https://github.com/elves/elvish/archive/v0.14.0.tar.gz | tar zx -C /build/elvish --strip-components=1
 
-COPY --from=elvish /bin/elvish /bin/elvish
+RUN cd /build/elvish \
+  && exa \
+  && go build -o bin/elvish \
+  && exa bin
+
+RUN cd /build/elvish \
+  && install -m 755 -D bin/elvish /usr/bin/elvish
+
 
 RUN mkdir -p /build/netatalk \
     && curl -Ls https://github.com/Netatalk/Netatalk/archive/netatalk-3-1-10.tar.gz | tar zx -C /build/netatalk --strip-components=1
@@ -72,7 +71,7 @@ RUN pip install git+https://github.com/jeffkaufman/icdiff.git
 RUN pip install tldr
 RUN pip3 install commitizen
 
-ENV SHELL /bin/elvish
+ENV SHELL /bin/zsh
 # Default to UTF-8 file.encoding
 #ENV LANG C.UTF-8
 
