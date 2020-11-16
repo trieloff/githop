@@ -1,0 +1,6 @@
+#!/bin/zsh
+# Run a command inside a docker container mounted at PWD
+
+PORT=$(mount | grep -e "on $(pwd)" | sed -e "s/.*://" | sed -e "s|/.*||")
+IMAGE=$(docker ps --no-trunc | grep -e "0.0.0.0:$PORT->548/tcp" | sed -e "s/ .*//")
+docker exec -ti $IMAGE zsh -c "cd $(basename $PWD) && $*"
