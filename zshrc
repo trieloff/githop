@@ -111,3 +111,5 @@ export NPM_CONFIG_PREFIX=~/.npm-global
 
 setopt no_share_history
 export SPACESHIP_PROMPT_SEPARATE_LINE
+
+elvish
