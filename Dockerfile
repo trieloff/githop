@@ -1,29 +1,29 @@
 
-FROM alpine:3.11.2
+FROM alpine:3.13.1
 
 LABEL author="Lars Trieloff <lars@trieloff.net>" 
 
 ENV BUILDDEPS="curl build-base automake autoconf libtool avahi-dev libgcrypt-dev linux-pam-dev cracklib-dev db-dev libevent-dev krb5-dev tdb-dev file cargo cmake go"
-ENV RUNTIMEDEPS="avahi libldap libgcrypt python avahi dbus dbus-glib py-dbus linux-pam cracklib db libevent krb5 tdb"
+ENV RUNTIMEDEPS="avahi libldap libgcrypt python3 avahi dbus dbus-glib py3-dbus linux-pam cracklib db libevent krb5 tdb"
 
 RUN apk --no-cache add $BUILDDEPS $RUNTIMEDEPS
 
 # exa, a modern replacement for ls
 
-RUN mkdir -p /build/exa \
-  && curl -Ls https://github.com/ogham/exa/archive/v0.9.0.tar.gz | tar zx -C /build/exa --strip-components=1
-
-RUN cd /build/exa \
-  && RUSTFLAGS="-C target-feature=-crt-static" cargo build --release --verbose
-
-RUN cd /build/exa \
-  && install -m755 -D target/release/exa "/usr/bin/exa" \ 
-  && install -m644 -D contrib/completions.zsh "/usr/share/zsh/site-functions/_exa"
+# RUN mkdir -p /build/exa \
+#  && curl -Ls https://github.com/ogham/exa/archive/v0.9.0.tar.gz | tar zx -C /build/exa --strip-components=1
+#
+# RUN cd /build/exa \
+#   && RUSTFLAGS="-C target-feature=-crt-static" cargo build --release --verbose
+# 
+# RUN cd /build/exa \
+#   && install -m755 -D target/release/exa "/usr/bin/exa" \ 
+#  && install -m644 -D contrib/completions.zsh "/usr/share/zsh/site-functions/_exa"
 
 # elvish shell
 
 RUN mkdir -p /build/elvish \
-  && curl -Ls https://github.com/elves/elvish/archive/v0.14.0.tar.gz | tar zx -C /build/elvish --strip-components=1
+  && curl -L https://github.com/elves/elvish/archive/v0.15.0.tar.gz --output - | tar zx -C /build/elvish --strip-components=1
 
 RUN cd /build/elvish \
   && exa \
@@ -58,13 +58,35 @@ RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/
 RUN echo "@community http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 
 RUN apk update && \
-    apk add --no-cache zsh curl jq openssh-client tmux micro@testing zip file git tig less bash asciinema httpie@community py-pip man-pages man mdocml-apropos less less-doc && \
-    rm -f /tmp/* /etc/apk/cache/*
+    apk add --no-cache \
+      asciinema \
+      bash \
+      bat@community \
+      curl \
+      file \
+      git \
+      httpie@community \
+      jq \
+      less \
+      less \
+      less-doc \
+      man \
+      man-pages \
+      mdocml-apropos \
+      micro@community \
+      openssh-client \
+      py-pip \
+      starship@community \
+      tig \
+      tmux \
+      zip \
+      zsh \
+    && rm -f /tmp/* /etc/apk/cache/*
 
 # RUN sed -i -e "s/bin\/ash/bin\/zsh/" /etc/passwd
 RUN git --version && curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh || true
 
-RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.12.1/bat-v0.12.1-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.12.1-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.12.1-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.12.1-x86_64-unknown-linux-musl*
+# RUN curl -L -O https://github.com/sharkdp/bat/releases/download/v0.17.1/bat-v0.17.1-x86_64-unknown-linux-musl.tar.gz && tar zxvf bat-v0.17.1-x86_64-unknown-linux-musl.tar.gz && mv bat-v0.17.1-x86_64-unknown-linux-musl/bat /usr/bin && rm -r bat-v0.17.1-x86_64-unknown-linux-musl*
 
 RUN pip install mdv
 RUN pip install git+https://github.com/jeffkaufman/icdiff.git
